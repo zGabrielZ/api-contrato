@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+import static br.com.gabrielferreira.contratos.common.utils.DataUtils.*;
+
 @Component
 public class TelefoneMapper {
 
@@ -33,8 +35,8 @@ public class TelefoneMapper {
                 .numero(telefone.getNumero())
                 .descricao(telefone.getDescricao())
                 .tipoTelefone(telefone.getTipoTelefone())
-                .dataCadastro(telefone.getDataCadastro())
-                .dataAtualizacao(telefone.getDataAtualizacao())
+                .dataCadastro(toFusoPadraoSistema(telefone.getDataCadastro()))
+                .dataAtualizacao(toFusoPadraoSistema(telefone.getDataAtualizacao()))
                 .build();
     }
 

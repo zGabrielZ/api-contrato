@@ -6,6 +6,8 @@ import br.com.gabrielferreira.contratos.domain.model.Usuario;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import static br.com.gabrielferreira.contratos.common.utils.DataUtils.*;
+
 @Component
 @RequiredArgsConstructor
 public class UsuarioMapper {
@@ -32,8 +34,8 @@ public class UsuarioMapper {
                 .email(usuario.getEmail())
                 .telefones(telefoneMapper.toTelefonesModels(usuario.getTelefones()))
                 .perfis(perfilMapper.toPerfisModels(usuario.getPerfis()))
-                .dataCadastrado(usuario.getDataCadastro())
-                .dataAtualizacao(usuario.getDataAtualizacao())
+                .dataCadastrado(toFusoPadraoSistema(usuario.getDataCadastro()))
+                .dataAtualizacao(toFusoPadraoSistema(usuario.getDataAtualizacao()))
                 .build();
     }
 }
