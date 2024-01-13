@@ -28,11 +28,11 @@ public class TelefoneInputModel implements Serializable {
     private String ddd;
 
     @NotBlank
-    @Size(max = 9)
+    @Size(max = 9, min = 8)
     @Pattern(regexp = "^[0-9]+$")
     private String numero;
 
-    @Size(max = 255)
+    @Size(max = 255, min = 1)
     private String descricao;
 
     @NotNull

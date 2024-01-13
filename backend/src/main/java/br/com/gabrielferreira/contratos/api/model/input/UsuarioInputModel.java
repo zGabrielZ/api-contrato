@@ -22,11 +22,11 @@ public class UsuarioInputModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotBlank
-    @Size(max = 255)
+    @Size(max = 255, min = 1)
     private String nome;
 
     @NotBlank
-    @Size(max = 255)
+    @Size(max = 255, min = 1)
     private String sobrenome;
 
     @NotBlank

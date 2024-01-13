@@ -4,14 +4,20 @@ import br.com.gabrielferreira.contratos.api.mapper.ErroPadraoMapper;
 import br.com.gabrielferreira.contratos.domain.exception.MsgErroException;
 import br.com.gabrielferreira.contratos.domain.exception.NaoEncontradoException;
 import br.com.gabrielferreira.contratos.domain.exception.RegraDeNegocioException;
+import br.com.gabrielferreira.contratos.domain.exception.model.ErroPadraoCamposModel;
+import br.com.gabrielferreira.contratos.domain.exception.model.ErroPadraoFormularioModel;
 import br.com.gabrielferreira.contratos.domain.exception.model.ErroPadraoModel;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 import static br.com.gabrielferreira.contratos.common.utils.DataUtils.*;
 
@@ -20,6 +26,8 @@ import static br.com.gabrielferreira.contratos.common.utils.DataUtils.*;
 public class ApiExceptionHandler {
 
     private final ErroPadraoMapper erroPadraoMapper;
+
+    private final MessageSource messageSource;
 
     @ExceptionHandler(NaoEncontradoException.class)
     public ResponseEntity<ErroPadraoModel> naoEncontradoException(NaoEncontradoException e, HttpServletRequest request){
@@ -40,5 +48,18 @@ public class ApiExceptionHandler {
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
         ErroPadraoModel erroPadraoModel = erroPadraoMapper.toErroPadrao(toFusoPadraoSistema(ZonedDateTime.now()), httpStatus.value(), "Erro", e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(httpStatus).body(erroPadraoModel);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErroPadraoModel> validacaoException(MethodArgumentNotValidException e, HttpServletRequest request){
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        ErroPadraoCamposModel erroPadraoCamposModel = erroPadraoMapper.toErroPadraoCampos(toFusoPadraoSistema(ZonedDateTime.now()), httpStatus.value(), "Erro validação de campos", "Ocorreu um erro de validação nos campos", request.getRequestURI());
+
+        List<ErroPadraoFormularioModel> campos = e.getBindingResult().getFieldErrors().stream()
+                .map(campo -> erroPadraoMapper.toErroPadraoFormulario(campo.getField(), messageSource.getMessage(campo, LocaleContextHolder.getLocale())))
+                .toList();
+        erroPadraoCamposModel.setCampos(campos);
+
+        return ResponseEntity.status(httpStatus).body(erroPadraoCamposModel);
     }
 }
