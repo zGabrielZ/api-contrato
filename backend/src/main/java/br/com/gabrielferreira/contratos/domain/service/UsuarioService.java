@@ -78,8 +78,8 @@ public class UsuarioService {
         usuarioEncontrado.setSobrenome(usuario.getSobrenome());
         usuarioEncontrado.setEmail(usuario.getEmail());
 
-        removerPerfisNaoExistentes(usuario.getPerfis(), usuarioEncontrado.getPerfis());
-        incluirNovosPerfis(usuario.getPerfis(), usuarioEncontrado.getPerfis());
+        removerPerfisNaoExistentes(usuarioEncontrado.getPerfis(), usuario.getPerfis());
+        incluirNovosPerfis(usuarioEncontrado.getPerfis(), usuario.getPerfis());
 
         removerTelefonesNaoExistentes(usuario.getTelefones(), usuarioEncontrado.getTelefones());
         incluirNovosTelefones(usuario.getTelefones(), usuarioEncontrado.getTelefones(), usuarioEncontrado);
