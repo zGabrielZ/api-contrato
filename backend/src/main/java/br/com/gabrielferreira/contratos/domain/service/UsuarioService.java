@@ -82,5 +82,16 @@ public class UsuarioService {
                 perfisExistentes.add(novoPerfil);
             }
         });
+
+        Set<Telefone> novosTelefones = usuario.getTelefones();
+        Set<Telefone> telefonesExistentes = usuarioEncontrado.getTelefones();
+
+        telefonesExistentes.removeIf(telefonesExistente -> telefonesExistente.isNaoContemTelefone(novosTelefones));
+        novosTelefones.forEach(novoTelefone -> {
+            if(novoTelefone.isNaoContemTelefone(telefonesExistentes)){
+                novoTelefone.setUsuario(usuarioEncontrado);
+                telefonesExistentes.add(novoTelefone);
+            }
+        });
     }
 }

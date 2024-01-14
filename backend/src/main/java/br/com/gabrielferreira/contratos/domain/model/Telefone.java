@@ -7,6 +7,7 @@ import lombok.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.Set;
 
 import static br.com.gabrielferreira.contratos.common.utils.DataUtils.*;
 import static br.com.gabrielferreira.contratos.common.utils.MascaraUtils.*;
@@ -75,6 +76,20 @@ public class Telefone implements Serializable {
         } else {
             return toMascaraTelefoneCelular(this.ddd, this.numero);
         }
+    }
+
+    public boolean isContemTelefone(Set<Telefone> telefones){
+        for(Telefone telefone : telefones) {
+            if(this.ddd.equals(telefone.getDdd()) && this.numero.equals(telefone.getNumero()) && this.descricao.equals(telefone.getDescricao())
+                    && this.tipoTelefone.equals(telefone.getTipoTelefone())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isNaoContemTelefone(Set<Telefone> telefones){
+        return !isContemTelefone(telefones);
     }
 
 }
