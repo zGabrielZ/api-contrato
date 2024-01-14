@@ -30,8 +30,7 @@ public class UsuarioService {
         usuarioValidator.validarPerfil(usuario);
 
         List<Telefone> telefones = usuario.getTelefones();
-        telefones.forEach(telefoneValidator::validarCampos);
-        telefones.forEach(telefoneValidator::validarTipoTelefone);
+        telefoneValidator.validarTelefones(telefones);
 
         for (Telefone telefone : usuario.getTelefones()) {
             telefone.setUsuario(usuario);
@@ -56,8 +55,7 @@ public class UsuarioService {
         usuarioValidator.validarPerfil(usuario);
 
         List<Telefone> telefones = usuario.getTelefones();
-        telefones.forEach(telefoneValidator::validarCampos);
-        telefones.forEach(telefoneValidator::validarTipoTelefone);
+        telefoneValidator.validarTelefones(telefones);
 
         preencherCamposUsuario(usuarioEncontrado, usuario);
 

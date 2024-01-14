@@ -5,6 +5,8 @@ import br.com.gabrielferreira.contratos.domain.model.Telefone;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class TelefoneValidador {
 
@@ -22,5 +24,12 @@ public class TelefoneValidador {
         } else if(telefone.isCelular() && telefone.getNumero().length() == 8){
             throw new RegraDeNegocioException(String.format("Este número informado %s não é um telefone residencial", telefone.getNumeroFormatado()));
         }
+    }
+
+    public void validarTelefones(List<Telefone> telefones){
+        telefones.forEach(telefone -> {
+            validarCampos(telefone);
+            validarTipoTelefone(telefone);
+        });
     }
 }
