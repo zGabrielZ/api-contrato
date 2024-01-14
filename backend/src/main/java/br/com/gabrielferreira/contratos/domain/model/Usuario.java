@@ -7,7 +7,9 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static br.com.gabrielferreira.contratos.common.utils.DataUtils.*;
 
@@ -39,7 +41,7 @@ public class Usuario implements Serializable {
     private String email;
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Telefone> telefones = new ArrayList<>();
+    private Set<Telefone> telefones = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "TB_USUARIO_PERFIL",

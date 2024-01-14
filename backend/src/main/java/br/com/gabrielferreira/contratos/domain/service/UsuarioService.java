@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class UsuarioService {
         usuarioValidator.validarEmail(usuario.getEmail(), usuario.getId());
         usuarioValidator.validarPerfil(usuario);
 
-        List<Telefone> telefones = usuario.getTelefones();
+        Set<Telefone> telefones = usuario.getTelefones();
         telefoneValidator.validarTelefones(telefones);
 
         for (Telefone telefone : usuario.getTelefones()) {
@@ -54,7 +55,7 @@ public class UsuarioService {
         usuarioValidator.validarEmail(usuario.getEmail(), usuarioEncontrado.getId());
         usuarioValidator.validarPerfil(usuario);
 
-        List<Telefone> telefones = usuario.getTelefones();
+        Set<Telefone> telefones = usuario.getTelefones();
         telefoneValidator.validarTelefones(telefones);
 
         preencherCamposUsuario(usuarioEncontrado, usuario);

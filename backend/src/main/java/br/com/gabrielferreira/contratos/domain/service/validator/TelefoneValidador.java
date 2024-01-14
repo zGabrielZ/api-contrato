@@ -5,7 +5,7 @@ import br.com.gabrielferreira.contratos.domain.model.Telefone;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Set;
 
 @Component
 public class TelefoneValidador {
@@ -26,7 +26,7 @@ public class TelefoneValidador {
         }
     }
 
-    public void validarTelefones(List<Telefone> telefones){
+    public void validarTelefones(Set<Telefone> telefones){
         telefones.forEach(telefone -> {
             validarCampos(telefone);
             validarTipoTelefone(telefone);

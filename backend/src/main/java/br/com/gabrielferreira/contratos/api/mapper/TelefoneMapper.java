@@ -9,8 +9,8 @@ import br.com.gabrielferreira.contratos.domain.repository.filter.TelefoneFilterM
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import static br.com.gabrielferreira.contratos.common.utils.DataUtils.*;
 
@@ -26,8 +26,8 @@ public class TelefoneMapper {
                 .build();
     }
 
-    public List<Telefone> toTelefones(List<TelefoneInputModel> telefones){
-        List<Telefone> novosTelefones = new ArrayList<>();
+    public Set<Telefone> toTelefones(Set<TelefoneInputModel> telefones){
+        Set<Telefone> novosTelefones = new HashSet<>();
         telefones.forEach(telefone -> novosTelefones.add(toTelefone(telefone)));
         return novosTelefones;
     }
@@ -44,8 +44,10 @@ public class TelefoneMapper {
                 .build();
     }
 
-    public List<TelefoneModel> toTelefonesModels(List<Telefone> telefones){
-        return telefones.stream().map(this::toTelefoneModel).toList();
+    public Set<TelefoneModel> toTelefonesModels(Set<Telefone> telefones){
+        Set<TelefoneModel> telefoneModels = new HashSet<>();
+        telefones.forEach(telefone -> telefoneModels.add(toTelefoneModel(telefone)));
+        return telefoneModels;
     }
 
     public Page<TelefoneModel> toTelefonesModels(Page<Telefone> telefones){
