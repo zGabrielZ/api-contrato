@@ -1,5 +1,6 @@
 package br.com.gabrielferreira.contratos.api.model.input;
 
+import br.com.gabrielferreira.contratos.api.validator.EnumValid;
 import br.com.gabrielferreira.contratos.domain.model.enums.TipoTelefoneEnum;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -36,5 +37,6 @@ public class TelefoneInputModel implements Serializable {
     private String descricao;
 
     @NotNull
-    private TipoTelefoneEnum tipoTelefone;
+    @EnumValid(enumClass = TipoTelefoneEnum.class)
+    private String tipoTelefone;
 }

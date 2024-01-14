@@ -1,6 +1,5 @@
 package br.com.gabrielferreira.contratos.api.model;
 
-import br.com.gabrielferreira.contratos.domain.model.enums.TipoTelefoneEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,7 +26,7 @@ public class TelefoneModel implements Serializable {
 
     private String descricao;
 
-    private TipoTelefoneEnum tipoTelefone;
+    private String tipoTelefone;
 
     private ZonedDateTime dataCadastro;
 

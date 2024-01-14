@@ -4,6 +4,7 @@ import br.com.gabrielferreira.contratos.api.model.TelefoneModel;
 import br.com.gabrielferreira.contratos.api.model.input.TelefoneInputModel;
 import br.com.gabrielferreira.contratos.api.model.params.TelefoneParamsModel;
 import br.com.gabrielferreira.contratos.domain.model.Telefone;
+import br.com.gabrielferreira.contratos.domain.model.enums.TipoTelefoneEnum;
 import br.com.gabrielferreira.contratos.domain.repository.filter.TelefoneFilterModel;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,7 @@ public class TelefoneMapper {
                 .ddd(telefone.getDdd())
                 .numero(telefone.getNumero())
                 .descricao(telefone.getDescricao())
-                .tipoTelefone(telefone.getTipoTelefone())
+                .tipoTelefone(TipoTelefoneEnum.valueOf(telefone.getTipoTelefone()))
                 .build();
     }
 
@@ -37,7 +38,7 @@ public class TelefoneMapper {
                 .ddd(telefone.getDdd())
                 .numero(telefone.getNumero())
                 .descricao(telefone.getDescricao())
-                .tipoTelefone(telefone.getTipoTelefone())
+                .tipoTelefone(telefone.getTipoTelefone().name())
                 .dataCadastro(toFusoPadraoSistema(telefone.getDataCadastro()))
                 .dataAtualizacao(toFusoPadraoSistema(telefone.getDataAtualizacao()))
                 .build();

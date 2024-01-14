@@ -1,5 +1,6 @@
 package br.com.gabrielferreira.contratos.api.model.params;
 
+import br.com.gabrielferreira.contratos.api.validator.EnumValid;
 import br.com.gabrielferreira.contratos.domain.model.enums.TipoTelefoneEnum;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -34,7 +35,8 @@ public class TelefoneParamsModel implements Serializable {
     @Size(max = 255, min = 1)
     private String descricao;
 
-    private TipoTelefoneEnum tipoTelefone;
+    @EnumValid(enumClass = TipoTelefoneEnum.class)
+    private String tipoTelefone;
 
     private LocalDate dataCadastro;
 

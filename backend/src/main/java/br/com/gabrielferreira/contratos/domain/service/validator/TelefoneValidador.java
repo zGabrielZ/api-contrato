@@ -1,4 +1,4 @@
-package br.com.gabrielferreira.contratos.domain.validator;
+package br.com.gabrielferreira.contratos.domain.service.validator;
 
 import br.com.gabrielferreira.contratos.domain.exception.RegraDeNegocioException;
 import br.com.gabrielferreira.contratos.domain.model.Telefone;

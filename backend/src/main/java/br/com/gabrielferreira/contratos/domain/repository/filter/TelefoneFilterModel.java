@@ -1,6 +1,5 @@
 package br.com.gabrielferreira.contratos.domain.repository.filter;
 
-import br.com.gabrielferreira.contratos.domain.model.enums.TipoTelefoneEnum;
 import io.micrometer.common.util.StringUtils;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,7 +27,7 @@ public class TelefoneFilterModel implements Serializable {
 
     private String descricao;
 
-    private TipoTelefoneEnum tipoTelefone;
+    private String tipoTelefone;
 
     private LocalDate dataCadastro;
 
@@ -51,7 +50,7 @@ public class TelefoneFilterModel implements Serializable {
     }
 
     public boolean isTipoTelefoneExistente(){
-        return this.tipoTelefone != null;
+        return StringUtils.isNotBlank(this.tipoTelefone);
     }
 
     public boolean isDataCadastroExistente(){
