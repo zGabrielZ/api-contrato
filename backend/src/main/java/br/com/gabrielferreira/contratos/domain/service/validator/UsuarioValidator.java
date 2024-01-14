@@ -8,7 +8,6 @@ import br.com.gabrielferreira.contratos.domain.service.PerfilService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -60,9 +59,10 @@ public class UsuarioValidator {
     }
 
     public void validarIdPerfil(Usuario usuario){
-        List<Perfil> perfis = new ArrayList<>();
-        usuario.getPerfis().forEach(perfil -> perfis.add(perfilService.buscarPerfilPorId(perfil.getId())));
-        usuario.getPerfis().clear();
-        usuario.setPerfis(perfis);
+        usuario.getPerfis().forEach(perfil -> {
+            Perfil perfilEncontrado = perfilService.buscarPerfilPorId(perfil.getId());
+            perfil.setDescricao(perfilEncontrado.getDescricao());
+            perfil.setAutoriedade(perfilEncontrado.getAutoriedade());
+        });
     }
 }

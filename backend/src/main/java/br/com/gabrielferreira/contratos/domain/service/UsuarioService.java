@@ -1,6 +1,7 @@
 package br.com.gabrielferreira.contratos.domain.service;
 
 import br.com.gabrielferreira.contratos.domain.exception.NaoEncontradoException;
+import br.com.gabrielferreira.contratos.domain.model.Perfil;
 import br.com.gabrielferreira.contratos.domain.model.Telefone;
 import br.com.gabrielferreira.contratos.domain.model.Usuario;
 import br.com.gabrielferreira.contratos.domain.repository.UsuarioRepository;
@@ -32,7 +33,7 @@ public class UsuarioService {
         telefones.forEach(telefoneValidator::validarCampos);
         telefones.forEach(telefoneValidator::validarTipoTelefone);
 
-        for (Telefone telefone : telefones) {
+        for (Telefone telefone : usuario.getTelefones()) {
             telefone.setUsuario(usuario);
         }
 
@@ -41,11 +42,46 @@ public class UsuarioService {
     }
 
     public Usuario buscarUsuarioPorId(Long id){
-        return usuarioRepository.findById(id)
+        return usuarioRepository.buscarPorId(id)
                 .orElseThrow(() -> new NaoEncontradoException("Usuário não encontrado"));
+    }
+
+    @Transactional
+    public Usuario atualizarUsuario(Long id, Usuario usuario){
+        Usuario usuarioEncontrado = usuarioRepository.buscarUsuarioCompletoPorId(id)
+                        .orElseThrow(() -> new NaoEncontradoException("Usuário não encontrado"));
+
+        usuarioValidator.validarCampos(usuario);
+        usuarioValidator.validarEmail(usuario.getEmail(), usuarioEncontrado.getId());
+        usuarioValidator.validarPerfil(usuario);
+
+        List<Telefone> telefones = usuario.getTelefones();
+        telefones.forEach(telefoneValidator::validarCampos);
+        telefones.forEach(telefoneValidator::validarTipoTelefone);
+
+        preencherCamposUsuario(usuarioEncontrado, usuario);
+
+        usuarioEncontrado = usuarioRepository.save(usuarioEncontrado);
+        return usuarioEncontrado;
     }
 
     public boolean isUsuarioExistente(Long id){
         return usuarioRepository.buscarUsuarioExistente(id);
+    }
+
+    private void preencherCamposUsuario(Usuario usuarioEncontrado, Usuario usuario){
+        usuarioEncontrado.setNome(usuario.getNome());
+        usuarioEncontrado.setSobrenome(usuario.getSobrenome());
+        usuarioEncontrado.setEmail(usuario.getEmail());
+
+        List<Perfil> novosPerfis = usuario.getPerfis();
+        List<Perfil> perfisExistentes = usuarioEncontrado.getPerfis();
+
+        perfisExistentes.removeIf(perfisExistente -> perfisExistente.isNaoContemPerfil(novosPerfis));
+        novosPerfis.forEach(novoPerfil -> {
+            if(novoPerfil.isNaoContemPerfil(perfisExistentes)){
+                perfisExistentes.add(novoPerfil);
+            }
+        });
     }
 }
