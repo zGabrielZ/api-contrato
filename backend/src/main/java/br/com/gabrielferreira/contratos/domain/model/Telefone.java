@@ -48,12 +48,15 @@ public class Telefone implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_USUARIO", nullable = false)
+    @EqualsAndHashCode.Include
     private Usuario usuario;
 
     @Column(name = "DATA_CADASTRO", nullable = false)
+    @EqualsAndHashCode.Include
     private ZonedDateTime dataCadastro;
 
     @Column(name = "DATA_ATUALIZACAO")
+    @EqualsAndHashCode.Include
     private ZonedDateTime dataAtualizacao;
 
     @PrePersist
