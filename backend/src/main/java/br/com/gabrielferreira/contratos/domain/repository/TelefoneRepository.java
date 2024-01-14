@@ -21,4 +21,10 @@ public interface TelefoneRepository extends JpaRepository<Telefone, Long> {
             "JOIN FETCH u.perfis p " +
             "WHERE u.id = :idUsuario and t.id = :idTelefone")
     Optional<Telefone> buscarTelefone(@Param("idUsuario") Long idUsuario, @Param("idTelefone") Long idTelefone);
+
+    @Query("SELECT COUNT(t.id) FROM Telefone t " +
+            "JOIN t.usuario u " +
+            "JOIN u.perfis p " +
+            "WHERE u.id = :idUsuario")
+    Long buscarQuantidadeTelefonePorUsuario(@Param("idUsuario") Long idUsuario);
 }

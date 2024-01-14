@@ -29,4 +29,11 @@ public class TelefoneService {
         return telefoneRepository.buscarTelefone(idUsuario, idTelefone)
                 .orElseThrow(() -> new NaoEncontradoException("Telefone não encontrado"));
     }
+
+    public Long buscarQuantidadeTelefonePorUsuario(Long idUsuario){
+        if(!usuarioService.isUsuarioExistente(idUsuario)){
+            throw new NaoEncontradoException("Usuário não encontrado");
+        }
+        return telefoneRepository.buscarQuantidadeTelefonePorUsuario(idUsuario);
+    }
 }

@@ -1,5 +1,6 @@
 package br.com.gabrielferreira.contratos.api.mapper;
 
+import br.com.gabrielferreira.contratos.api.model.QuantidadeTelefoneModel;
 import br.com.gabrielferreira.contratos.api.model.TelefoneModel;
 import br.com.gabrielferreira.contratos.api.model.input.TelefoneInputModel;
 import br.com.gabrielferreira.contratos.api.model.params.TelefoneParamsModel;
@@ -63,6 +64,12 @@ public class TelefoneMapper {
                 .tipoTelefone(telefoneParamsModel.getTipoTelefone())
                 .dataCadastro(telefoneParamsModel.getDataCadastro())
                 .dataAtualizacao(telefoneParamsModel.getDataAtualizacao())
+                .build();
+    }
+
+    public QuantidadeTelefoneModel toQuantidadeTelefoneModel(Long quantidade){
+        return QuantidadeTelefoneModel.builder()
+                .quantidadeDeTelefone(quantidade)
                 .build();
     }
 }

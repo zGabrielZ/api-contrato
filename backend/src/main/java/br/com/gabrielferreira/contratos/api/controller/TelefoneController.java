@@ -1,6 +1,7 @@
 package br.com.gabrielferreira.contratos.api.controller;
 
 import br.com.gabrielferreira.contratos.api.mapper.TelefoneMapper;
+import br.com.gabrielferreira.contratos.api.model.QuantidadeTelefoneModel;
 import br.com.gabrielferreira.contratos.api.model.TelefoneModel;
 import br.com.gabrielferreira.contratos.api.model.params.TelefoneParamsModel;
 import br.com.gabrielferreira.contratos.domain.model.Telefone;
@@ -41,5 +42,13 @@ public class TelefoneController {
         TelefoneModel telefoneModel = telefoneMapper.toTelefoneModel(telefone);
 
         return ResponseEntity.ok().body(telefoneModel);
+    }
+
+    @GetMapping("/quantidade")
+    public ResponseEntity<QuantidadeTelefoneModel> buscarQuantidadeTelefonesPorUsuario(@PathVariable Long idUsuario){
+        Long quantidadeTelefone = telefoneService.buscarQuantidadeTelefonePorUsuario(idUsuario);
+        QuantidadeTelefoneModel quantidadeTelefoneModel = telefoneMapper.toQuantidadeTelefoneModel(quantidadeTelefone);
+
+        return ResponseEntity.ok().body(quantidadeTelefoneModel);
     }
 }
