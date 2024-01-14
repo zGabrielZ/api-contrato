@@ -1,5 +1,6 @@
 package br.com.gabrielferreira.contratos.domain.service;
 
+import br.com.gabrielferreira.contratos.domain.exception.NaoEncontradoException;
 import br.com.gabrielferreira.contratos.domain.model.Telefone;
 import br.com.gabrielferreira.contratos.domain.model.Usuario;
 import br.com.gabrielferreira.contratos.domain.repository.UsuarioRepository;
@@ -37,5 +38,14 @@ public class UsuarioService {
 
         usuario = usuarioRepository.save(usuario);
         return usuario;
+    }
+
+    public Usuario buscarUsuarioPorId(Long id){
+        return usuarioRepository.findById(id)
+                .orElseThrow(() -> new NaoEncontradoException("Usuário não encontrado"));
+    }
+
+    public boolean isUsuarioExistente(Long id){
+        return usuarioRepository.buscarUsuarioExistente(id);
     }
 }

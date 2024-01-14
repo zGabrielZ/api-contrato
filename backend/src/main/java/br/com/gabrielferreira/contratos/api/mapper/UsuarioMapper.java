@@ -38,4 +38,16 @@ public class UsuarioMapper {
                 .dataAtualizacao(toFusoPadraoSistema(usuario.getDataAtualizacao()))
                 .build();
     }
+
+    public UsuarioModel toUsuarioSemTelefoneModel(Usuario usuario){
+        return UsuarioModel.builder()
+                .id(usuario.getId())
+                .nome(usuario.getNome())
+                .sobrenome(usuario.getSobrenome())
+                .email(usuario.getEmail())
+                .perfis(perfilMapper.toPerfisModels(usuario.getPerfis()))
+                .dataCadastrado(toFusoPadraoSistema(usuario.getDataCadastro()))
+                .dataAtualizacao(toFusoPadraoSistema(usuario.getDataAtualizacao()))
+                .build();
+    }
 }
