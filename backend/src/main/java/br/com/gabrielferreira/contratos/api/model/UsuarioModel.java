@@ -9,9 +9,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -30,7 +28,7 @@ public class UsuarioModel implements Serializable {
 
     private String email;
 
-    private Set<TelefoneModel> telefones = new HashSet<>();
+    private List<TelefoneModel> telefones = new ArrayList<>();
 
     private List<PerfilModel> perfis = new ArrayList<>();
 

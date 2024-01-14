@@ -26,7 +26,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Boolean buscarUsuarioExistente(@Param("id") Long id);
 
     @Query("SELECT u FROM Usuario u " +
-            "JOIN FETCH u.perfis p " +
+            "JOIN u.perfis p " +
             "JOIN FETCH u.telefones t " +
             "WHERE u.id = :id")
     Optional<Usuario> buscarUsuarioCompletoPorId(@Param("id") Long id);

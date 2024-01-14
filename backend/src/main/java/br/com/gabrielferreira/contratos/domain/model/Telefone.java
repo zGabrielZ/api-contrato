@@ -7,7 +7,7 @@ import lombok.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.Set;
+import java.util.List;
 
 import static br.com.gabrielferreira.contratos.common.utils.DataUtils.*;
 import static br.com.gabrielferreira.contratos.common.utils.MascaraUtils.*;
@@ -31,15 +31,19 @@ public class Telefone implements Serializable {
     private Long id;
 
     @Column(name = "DDD", nullable = false)
+    @EqualsAndHashCode.Include
     private String ddd;
 
     @Column(name = "NUMERO", nullable = false)
+    @EqualsAndHashCode.Include
     private String numero;
 
     @Column(name = "DESCRICAO")
+    @EqualsAndHashCode.Include
     private String descricao;
 
     @Enumerated(EnumType.STRING)
+    @EqualsAndHashCode.Include
     private TipoTelefoneEnum tipoTelefone;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -78,7 +82,7 @@ public class Telefone implements Serializable {
         }
     }
 
-    public boolean isContemTelefone(Set<Telefone> telefones){
+    public boolean isContemTelefone(List<Telefone> telefones){
         for(Telefone telefone : telefones) {
             if(this.ddd.equals(telefone.getDdd()) && this.numero.equals(telefone.getNumero()) && this.descricao.equals(telefone.getDescricao())
                     && this.tipoTelefone.equals(telefone.getTipoTelefone())){
@@ -88,7 +92,7 @@ public class Telefone implements Serializable {
         return false;
     }
 
-    public boolean isNaoContemTelefone(Set<Telefone> telefones){
+    public boolean isNaoContemTelefone(List<Telefone> telefones){
         return !isContemTelefone(telefones);
     }
 

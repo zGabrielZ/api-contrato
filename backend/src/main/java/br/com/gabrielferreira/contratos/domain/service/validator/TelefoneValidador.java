@@ -5,6 +5,8 @@ import br.com.gabrielferreira.contratos.domain.model.Telefone;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -26,10 +28,28 @@ public class TelefoneValidador {
         }
     }
 
-    public void validarTelefones(Set<Telefone> telefones){
+    public void validarTelefonesDuplicados(List<Telefone> telefones){
+        Set<Telefone> conjunto = new HashSet<>();
+
+        boolean isRepetido = false;
+        for (Telefone telefone : telefones) {
+            if (!conjunto.add(telefone)) {
+                isRepetido = true;
+                break;
+            }
+        }
+
+        if(isRepetido){
+            throw new RegraDeNegocioException("Não vai ser possível cadastrar este usuário pois tem telefones duplicados ou mais de duplicados");
+        }
+
+    }
+
+    public void validarTelefones(List<Telefone> telefones){
         telefones.forEach(telefone -> {
             validarCampos(telefone);
             validarTipoTelefone(telefone);
         });
+        validarTelefonesDuplicados(telefones);
     }
 }

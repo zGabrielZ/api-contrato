@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +29,7 @@ public class UsuarioService {
         usuarioValidator.validarEmail(usuario.getEmail(), usuario.getId());
         usuarioValidator.validarPerfil(usuario);
 
-        Set<Telefone> telefones = usuario.getTelefones();
+        List<Telefone> telefones = usuario.getTelefones();
         telefoneValidator.validarTelefones(telefones);
 
         for (Telefone telefone : usuario.getTelefones()) {
@@ -55,7 +54,7 @@ public class UsuarioService {
         usuarioValidator.validarEmail(usuario.getEmail(), usuarioEncontrado.getId());
         usuarioValidator.validarPerfil(usuario);
 
-        Set<Telefone> telefones = usuario.getTelefones();
+        List<Telefone> telefones = usuario.getTelefones();
         telefoneValidator.validarTelefones(telefones);
 
         preencherCamposUsuario(usuarioEncontrado, usuario);
@@ -73,25 +72,35 @@ public class UsuarioService {
         usuarioEncontrado.setSobrenome(usuario.getSobrenome());
         usuarioEncontrado.setEmail(usuario.getEmail());
 
-        List<Perfil> novosPerfis = usuario.getPerfis();
-        List<Perfil> perfisExistentes = usuarioEncontrado.getPerfis();
+        removerPerfisNaoExistentes(usuario.getPerfis(), usuarioEncontrado.getPerfis());
+        incluirNovosPerfis(usuario.getPerfis(), usuarioEncontrado.getPerfis());
 
+        removerTelefonesNaoExistentes(usuario.getTelefones(), usuarioEncontrado.getTelefones());
+        incluirNovosTelefones(usuario.getTelefones(), usuarioEncontrado.getTelefones(), usuarioEncontrado);
+    }
+
+    private void removerPerfisNaoExistentes(List<Perfil> perfisExistentes, List<Perfil> novosPerfis){
         perfisExistentes.removeIf(perfisExistente -> perfisExistente.isNaoContemPerfil(novosPerfis));
+    }
+
+    private void incluirNovosPerfis(List<Perfil> perfisExistentes, List<Perfil> novosPerfis){
         novosPerfis.forEach(novoPerfil -> {
             if(novoPerfil.isNaoContemPerfil(perfisExistentes)){
                 perfisExistentes.add(novoPerfil);
             }
         });
+    }
 
-        Set<Telefone> novosTelefones = usuario.getTelefones();
-        Set<Telefone> telefonesExistentes = usuarioEncontrado.getTelefones();
-
-        telefonesExistentes.removeIf(telefonesExistente -> telefonesExistente.isNaoContemTelefone(novosTelefones));
+    private void incluirNovosTelefones(List<Telefone> novosTelefones, List<Telefone> telefonesExistentes, Usuario usuarioEncontrado){
         novosTelefones.forEach(novoTelefone -> {
             if(novoTelefone.isNaoContemTelefone(telefonesExistentes)){
                 novoTelefone.setUsuario(usuarioEncontrado);
                 telefonesExistentes.add(novoTelefone);
             }
         });
+    }
+
+    private void removerTelefonesNaoExistentes(List<Telefone> novosTelefones, List<Telefone> telefonesExistentes){
+        telefonesExistentes.removeIf(telefonesExistente -> telefonesExistente.isNaoContemTelefone(novosTelefones));
     }
 }
