@@ -5,9 +5,13 @@ import br.com.gabrielferreira.contratos.domain.model.Perfil;
 import br.com.gabrielferreira.contratos.domain.model.Telefone;
 import br.com.gabrielferreira.contratos.domain.model.Usuario;
 import br.com.gabrielferreira.contratos.domain.repository.UsuarioRepository;
+import br.com.gabrielferreira.contratos.domain.repository.filter.UsuarioFilterModel;
 import br.com.gabrielferreira.contratos.domain.service.validator.TelefoneValidador;
 import br.com.gabrielferreira.contratos.domain.service.validator.UsuarioValidator;
+import br.com.gabrielferreira.contratos.domain.specification.UsuarioSpecification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,6 +75,10 @@ public class UsuarioService {
     public void deletarUsuarioPorId(Long id){
         Usuario usuario = buscarUsuarioPorId(id);
         usuarioRepository.delete(usuario);
+    }
+
+    public Page<Usuario> buscarUsuarios(Pageable pageable, UsuarioFilterModel filtro){
+        return usuarioRepository.findAll(new UsuarioSpecification(filtro), pageable);
     }
 
     private void preencherCamposUsuario(Usuario usuarioEncontrado, Usuario usuario){
