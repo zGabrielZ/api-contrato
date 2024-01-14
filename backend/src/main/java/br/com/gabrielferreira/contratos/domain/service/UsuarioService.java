@@ -67,6 +67,12 @@ public class UsuarioService {
         return usuarioRepository.buscarUsuarioExistente(id);
     }
 
+    @Transactional
+    public void deletarUsuarioPorId(Long id){
+        Usuario usuario = buscarUsuarioPorId(id);
+        usuarioRepository.delete(usuario);
+    }
+
     private void preencherCamposUsuario(Usuario usuarioEncontrado, Usuario usuario){
         usuarioEncontrado.setNome(usuario.getNome());
         usuarioEncontrado.setSobrenome(usuario.getSobrenome());
