@@ -36,10 +36,5 @@ public class UsuarioInputModel implements Serializable {
     @Valid
     @NotEmpty
     @NotNull
-    private List<TelefoneInputModel> telefones = new ArrayList<>();
-
-    @Valid
-    @NotEmpty
-    @NotNull
     private List<PerfilInputModel> perfis = new ArrayList<>();
 }

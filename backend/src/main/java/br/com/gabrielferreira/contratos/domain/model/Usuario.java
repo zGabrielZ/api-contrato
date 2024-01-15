@@ -38,7 +38,7 @@ public class Usuario implements Serializable {
     @Column(name = "EMAIL", nullable = false, unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
     private List<Telefone> telefones = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)

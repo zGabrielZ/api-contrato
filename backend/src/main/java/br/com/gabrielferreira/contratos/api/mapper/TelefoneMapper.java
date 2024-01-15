@@ -10,27 +10,18 @@ import br.com.gabrielferreira.contratos.domain.repository.filter.TelefoneFilterM
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static br.com.gabrielferreira.contratos.common.utils.DataUtils.*;
 
 @Component
 public class TelefoneMapper {
 
-    public Telefone toTelefone(TelefoneInputModel telefone){
+    public Telefone toTelefone(TelefoneInputModel telefoneInputModel){
         return Telefone.builder()
-                .ddd(telefone.getDdd())
-                .numero(telefone.getNumero())
-                .descricao(telefone.getDescricao())
-                .tipoTelefone(TipoTelefoneEnum.valueOf(telefone.getTipoTelefone()))
+                .ddd(telefoneInputModel.getDdd())
+                .numero(telefoneInputModel.getNumero())
+                .descricao(telefoneInputModel.getDescricao())
+                .tipoTelefone(TipoTelefoneEnum.valueOf(telefoneInputModel.getTipoTelefone()))
                 .build();
-    }
-
-    public List<Telefone> toTelefones(List<TelefoneInputModel> telefones){
-        List<Telefone> novosTelefones = new ArrayList<>();
-        telefones.forEach(telefone -> novosTelefones.add(toTelefone(telefone)));
-        return novosTelefones;
     }
 
     public TelefoneModel toTelefoneModel(Telefone telefone){
@@ -43,12 +34,6 @@ public class TelefoneMapper {
                 .dataCadastro(toFusoPadraoSistema(telefone.getDataCadastro()))
                 .dataAtualizacao(toFusoPadraoSistema(telefone.getDataAtualizacao()))
                 .build();
-    }
-
-    public List<TelefoneModel> toTelefonesModels(List<Telefone> telefones){
-        List<TelefoneModel> telefoneModels = new ArrayList<>();
-        telefones.forEach(telefone -> telefoneModels.add(toTelefoneModel(telefone)));
-        return telefoneModels;
     }
 
     public Page<TelefoneModel> toTelefonesModels(Page<Telefone> telefones){

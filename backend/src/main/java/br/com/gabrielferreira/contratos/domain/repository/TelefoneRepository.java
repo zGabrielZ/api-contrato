@@ -1,6 +1,7 @@
 package br.com.gabrielferreira.contratos.domain.repository;
 
 import br.com.gabrielferreira.contratos.domain.model.Telefone;
+import br.com.gabrielferreira.contratos.domain.model.enums.TipoTelefoneEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -27,4 +28,11 @@ public interface TelefoneRepository extends JpaRepository<Telefone, Long> {
             "JOIN u.perfis p " +
             "WHERE u.id = :idUsuario")
     Long buscarQuantidadeTelefonePorUsuario(@Param("idUsuario") Long idUsuario);
+
+    @Query("SELECT t FROM Telefone t " +
+            "JOIN FETCH t.usuario u " +
+            "WHERE t.ddd = :ddd AND " +
+            "t.numero = :numero AND " +
+            "t.tipoTelefone = :tipoTelefone")
+    Optional<Telefone> buscarPorTelefone(@Param("ddd") String ddd, @Param("numero") String numero, @Param("tipoTelefone") TipoTelefoneEnum tipoTelefone);
 }

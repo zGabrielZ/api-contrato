@@ -2,14 +2,16 @@ package br.com.gabrielferreira.contratos.domain.service.validator;
 
 import br.com.gabrielferreira.contratos.domain.exception.RegraDeNegocioException;
 import br.com.gabrielferreira.contratos.domain.model.Telefone;
+import br.com.gabrielferreira.contratos.domain.repository.TelefoneRepository;
 import io.micrometer.common.util.StringUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.List;
-
 @Component
+@RequiredArgsConstructor
 public class TelefoneValidador {
+
+    private final TelefoneRepository telefoneRepository;
 
     public void validarCampos(Telefone telefone){
         telefone.setDdd(telefone.getDdd().trim());
@@ -27,21 +29,20 @@ public class TelefoneValidador {
         }
     }
 
-    public void validarTelefonesDuplicados(List<Telefone> telefones){
-        telefones.forEach(telefone -> {
-            int duplicados = Collections.frequency(telefones, telefone);
-
-            if(duplicados > 1){
-                throw new RegraDeNegocioException("Não vai ser possível cadastrar este usuário pois tem telefones duplicados ou mais de duplicados");
-            }
-        });
+    public void validarTelefoneExistente(Long idTelefone, Telefone telefone){
+        if(isTelefoneExistentePorUsuario(idTelefone, telefone)){
+            throw new RegraDeNegocioException(String.format("Este telefone '%s' já foi cadastrado", telefone.getNumeroFormatado()));
+        }
     }
 
-    public void validarTelefones(List<Telefone> telefones){
-        telefones.forEach(telefone -> {
-            validarCampos(telefone);
-            validarTipoTelefone(telefone);
-        });
-        validarTelefonesDuplicados(telefones);
+    public boolean isTelefoneExistentePorUsuario(Long idTelefone, Telefone telefone){
+        if(idTelefone == null){
+            return telefoneRepository.buscarPorTelefone(telefone.getDdd(), telefone.getNumero(), telefone.getTipoTelefone())
+                    .isPresent();
+        } else {
+            return telefoneRepository.buscarPorTelefone(telefone.getDdd(), telefone.getNumero(), telefone.getTipoTelefone())
+                    .filter(t -> !t.getId().equals(idTelefone))
+                    .isPresent();
+        }
     }
 }

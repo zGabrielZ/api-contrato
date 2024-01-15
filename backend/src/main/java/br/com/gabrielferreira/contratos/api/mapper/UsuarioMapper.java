@@ -16,8 +16,6 @@ import static br.com.gabrielferreira.contratos.common.utils.DataUtils.*;
 @RequiredArgsConstructor
 public class UsuarioMapper {
 
-    private final TelefoneMapper telefoneMapper;
-
     private final PerfilMapper perfilMapper;
 
     public Usuario toUsuario(UsuarioInputModel usuario){
@@ -25,7 +23,6 @@ public class UsuarioMapper {
                 .nome(usuario.getNome())
                 .sobrenome(usuario.getSobrenome())
                 .email(usuario.getEmail())
-                .telefones(telefoneMapper.toTelefones(usuario.getTelefones()))
                 .perfis(perfilMapper.toPerfis(usuario.getPerfis()))
                 .build();
     }
@@ -36,7 +33,6 @@ public class UsuarioMapper {
                 .nome(usuario.getNome())
                 .sobrenome(usuario.getSobrenome())
                 .email(usuario.getEmail())
-                .telefones(telefoneMapper.toTelefonesModels(usuario.getTelefones()))
                 .perfis(perfilMapper.toPerfisModels(usuario.getPerfis()))
                 .dataCadastrado(toFusoPadraoSistema(usuario.getDataCadastro()))
                 .dataAtualizacao(toFusoPadraoSistema(usuario.getDataAtualizacao()))

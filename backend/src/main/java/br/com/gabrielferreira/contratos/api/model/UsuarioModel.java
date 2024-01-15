@@ -28,8 +28,6 @@ public class UsuarioModel implements Serializable {
 
     private String email;
 
-    private List<TelefoneModel> telefones = new ArrayList<>();
-
     private List<PerfilModel> perfis = new ArrayList<>();
 
     private ZonedDateTime dataCadastrado;
