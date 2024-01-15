@@ -41,7 +41,7 @@ public class TelefoneValidador {
                     .isPresent();
         } else {
             return telefoneRepository.buscarPorTelefone(telefone.getDdd(), telefone.getNumero(), telefone.getTipoTelefone())
-                    .filter(t -> !t.getId().equals(idTelefone))
+                    .filter(id -> !id.equals(idTelefone))
                     .isPresent();
         }
     }

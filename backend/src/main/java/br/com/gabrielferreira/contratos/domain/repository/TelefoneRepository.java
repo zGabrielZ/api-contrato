@@ -29,10 +29,10 @@ public interface TelefoneRepository extends JpaRepository<Telefone, Long> {
             "WHERE u.id = :idUsuario")
     Long buscarQuantidadeTelefonePorUsuario(@Param("idUsuario") Long idUsuario);
 
-    @Query("SELECT t FROM Telefone t " +
-            "JOIN FETCH t.usuario u " +
+    @Query("SELECT t.id FROM Telefone t " +
+            "JOIN t.usuario u " +
             "WHERE t.ddd = :ddd AND " +
             "t.numero = :numero AND " +
             "t.tipoTelefone = :tipoTelefone")
-    Optional<Telefone> buscarPorTelefone(@Param("ddd") String ddd, @Param("numero") String numero, @Param("tipoTelefone") TipoTelefoneEnum tipoTelefone);
+    Optional<Long> buscarPorTelefone(@Param("ddd") String ddd, @Param("numero") String numero, @Param("tipoTelefone") TipoTelefoneEnum tipoTelefone);
 }
