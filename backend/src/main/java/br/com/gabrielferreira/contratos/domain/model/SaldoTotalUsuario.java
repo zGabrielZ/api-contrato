@@ -28,7 +28,7 @@ public class SaldoTotalUsuario implements Serializable {
     @EqualsAndHashCode.Include
     private Long id;
 
-    @Column(name = "NOME", nullable = false)
+    @Column(name = "VALOR", nullable = false)
     private BigDecimal valor;
 
     @Column(name = "DATA_CADASTRO", nullable = false)

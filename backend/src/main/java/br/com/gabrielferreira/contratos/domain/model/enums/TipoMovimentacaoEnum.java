@@ -11,4 +11,8 @@ public enum TipoMovimentacaoEnum {
     SAQUE("Saque");
 
     private final String descricao;
+
+    public static boolean isSaque(TipoMovimentacaoEnum tipoMovimentacaoEnum){
+        return SAQUE.name().equals(tipoMovimentacaoEnum.name());
+    }
 }

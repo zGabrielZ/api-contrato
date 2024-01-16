@@ -17,7 +17,7 @@ import static br.com.gabrielferreira.contratos.common.utils.DataUtils.UTC;
 @ToString(exclude = {"saldo", "usuario"})
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "TB_SALDO")
+@Table(name = "TB_HISTORICO_SALDO")
 public class HistoricoSaldo implements Serializable {
 
     @Serial
@@ -36,8 +36,11 @@ public class HistoricoSaldo implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Usuario usuario;
 
-    @Column(name = "VALOR", nullable = false)
-    private BigDecimal valor;
+    @Column(name = "VALOR_ATUAL", nullable = false)
+    private BigDecimal valorAtual;
+
+    @Column(name = "QUANTIDADE_INFORMADA", nullable = false)
+    private BigDecimal quantidadeInformada;
 
     @Column(name = "DATA_CADASTRO", nullable = false)
     private ZonedDateTime dataCadastro;
