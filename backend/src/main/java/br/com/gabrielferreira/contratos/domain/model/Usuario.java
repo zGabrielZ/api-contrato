@@ -15,7 +15,7 @@ import static br.com.gabrielferreira.contratos.common.utils.DataUtils.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = {"telefones", "perfis"})
+@ToString(exclude = {"telefones", "perfis", "saldoTotal", "saldos", "historicoSaldos"})
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "TB_USUARIO")
@@ -46,6 +46,16 @@ public class Usuario implements Serializable {
             joinColumns = @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID", table = "TB_USUARIO"),
             inverseJoinColumns = @JoinColumn(name = "ID_PERFIL", referencedColumnName = "ID", table = "TB_PERFIL"))
     private List<Perfil> perfis = new ArrayList<>();
+
+    @JoinColumn(name = "ID_SALDO_TOTAL")
+    @OneToOne(fetch = FetchType.LAZY)
+    private SaldoTotalUsuario saldoTotal;
+
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Saldo> saldos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<HistoricoSaldo> historicoSaldos = new ArrayList<>();
 
     @Column(name = "DATA_CADASTRO", nullable = false)
     private ZonedDateTime dataCadastro;
