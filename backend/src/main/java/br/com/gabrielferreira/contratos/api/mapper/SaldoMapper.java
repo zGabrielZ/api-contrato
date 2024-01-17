@@ -1,6 +1,6 @@
 package br.com.gabrielferreira.contratos.api.mapper;
 
-import br.com.gabrielferreira.contratos.api.model.DepositoModel;
+import br.com.gabrielferreira.contratos.api.model.SaldoModel;
 import br.com.gabrielferreira.contratos.api.model.input.SaldoInputModel;
 import br.com.gabrielferreira.contratos.domain.model.Saldo;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +20,8 @@ public class SaldoMapper {
                 .build();
     }
 
-    public DepositoModel toDepositoModel(Saldo saldo){
-        return DepositoModel.builder()
+    public SaldoModel toSaldoModel(Saldo saldo){
+        return SaldoModel.builder()
                 .id(saldo.getId())
                 .valor(saldo.getValor())
                 .tipoMovimentacao(saldo.getTipoMovimentacao().name())

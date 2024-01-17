@@ -4,7 +4,7 @@ import br.com.gabrielferreira.contratos.api.mapper.SaldoMapper;
 import br.com.gabrielferreira.contratos.api.model.SaldoModel;
 import br.com.gabrielferreira.contratos.api.model.input.SaldoInputModel;
 import br.com.gabrielferreira.contratos.domain.model.Saldo;
-import br.com.gabrielferreira.contratos.domain.service.DepositoService;
+import br.com.gabrielferreira.contratos.domain.service.SaqueService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,19 +14,19 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/usuarios/{idUsuario}/depositos")
+@RequestMapping("/usuarios/{idUsuario}/saques")
 @RequiredArgsConstructor
-public class DepositoController {
+public class SaqueController {
 
-    private final DepositoService depositoService;
+    private final SaqueService saqueService;
 
     private final SaldoMapper saldoMapper;
 
     @PostMapping
-    public ResponseEntity<SaldoModel> depositar(@PathVariable Long idUsuario, @Valid @RequestBody SaldoInputModel input){
+    public ResponseEntity<SaldoModel> sacar(@PathVariable Long idUsuario, @Valid @RequestBody SaldoInputModel input){
         Saldo saldo = saldoMapper.toSaldo(input);
-        Saldo depositoCadastrado = depositoService.depositar(idUsuario, saldo);
-        SaldoModel saldoModel = saldoMapper.toSaldoModel(depositoCadastrado);
+        Saldo saqueCadastrado = saqueService.saque(idUsuario, saldo);
+        SaldoModel saldoModel = saldoMapper.toSaldoModel(saqueCadastrado);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
                 .buildAndExpand(saldoModel.getId()).toUri();

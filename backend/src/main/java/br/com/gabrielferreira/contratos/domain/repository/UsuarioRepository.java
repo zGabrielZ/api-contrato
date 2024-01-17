@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Repository
@@ -29,4 +30,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Boolean buscarUsuarioExistente(@Param("id") Long id);
 
     Page<Usuario> findAll(Specification<Usuario> specification, Pageable pageable);
+
+    @Query("SELECT saldoTotal.valor as valor FROM Usuario u " +
+            "JOIN u.saldoTotal saldoTotal " +
+            "WHERE u.id = :idUsuario")
+    Optional<BigDecimal> buscarSaldoTotalAtual(@Param("idUsuario") Long idUsuario);
 }

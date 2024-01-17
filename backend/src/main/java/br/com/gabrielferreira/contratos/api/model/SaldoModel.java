@@ -14,7 +14,7 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DepositoModel implements Serializable {
+public class SaldoModel implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
