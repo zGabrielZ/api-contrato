@@ -59,7 +59,7 @@ public class UsuarioMapper {
                 .nome(usuario.getNome())
                 .sobrenome(usuario.getSobrenome())
                 .email(usuario.getEmail())
-                //.saldoTotal(usuario.getSaldoTotal() != null ? usuario.getSaldoTotal().getValor() : null)
+                .saldoTotal(usuario.getSaldoTotal() != null ? usuario.getSaldoTotal().getValor() : null)
                 .dataCadastrado(usuario.getDataCadastro())
                 .dataAtualizacao(usuario.getDataAtualizacao())
                 .build();

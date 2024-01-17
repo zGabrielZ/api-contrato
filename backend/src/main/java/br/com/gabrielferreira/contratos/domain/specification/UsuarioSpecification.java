@@ -53,6 +53,18 @@ public class UsuarioSpecification implements Specification<Usuario> {
             predicates.add(predicateDataAtualizacao);
         }
 
+        if (currentQueryIsCountRecords(query)) {
+            root.join("perfis", JoinType.INNER);
+            root.join("saldoTotal", JoinType.LEFT);
+        } else {
+            root.fetch("perfis", JoinType.INNER);
+            root.fetch("saldoTotal", JoinType.LEFT);
+        }
+
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
+    }
+
+    private boolean currentQueryIsCountRecords(CriteriaQuery<?> criteriaQuery) {
+        return criteriaQuery.getResultType() == Long.class || criteriaQuery.getResultType() == long.class;
     }
 }
