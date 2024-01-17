@@ -21,8 +21,6 @@ public class UsuarioSpecification implements Specification<Usuario> {
     public Predicate toPredicate(Root<Usuario> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
 
-        root.join("perfis");
-
         if(filtro.isIdExistente()){
             Predicate predicateId = criteriaBuilder.equal(root.get("id"), filtro.getId());
             predicates.add(predicateId);

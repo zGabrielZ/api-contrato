@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,8 @@ public class UsuarioModel implements Serializable {
     private String email;
 
     private List<PerfilModel> perfis = new ArrayList<>();
+
+    private BigDecimal saldoTotal;
 
     private ZonedDateTime dataCadastrado;
 

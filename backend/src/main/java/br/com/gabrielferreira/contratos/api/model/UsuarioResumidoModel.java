@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 
 @Data
@@ -25,6 +26,8 @@ public class UsuarioResumidoModel implements Serializable {
     private String sobrenome;
 
     private String email;
+
+    private BigDecimal saldoTotal;
 
     private ZonedDateTime dataCadastrado;
 

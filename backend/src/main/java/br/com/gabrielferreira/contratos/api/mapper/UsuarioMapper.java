@@ -34,6 +34,7 @@ public class UsuarioMapper {
                 .sobrenome(usuario.getSobrenome())
                 .email(usuario.getEmail())
                 .perfis(perfilMapper.toPerfisModels(usuario.getPerfis()))
+                .saldoTotal(usuario.getSaldoTotal() != null ? usuario.getSaldoTotal().getValor() : null)
                 .dataCadastrado(toFusoPadraoSistema(usuario.getDataCadastro()))
                 .dataAtualizacao(toFusoPadraoSistema(usuario.getDataAtualizacao()))
                 .build();
@@ -46,6 +47,7 @@ public class UsuarioMapper {
                 .sobrenome(usuario.getSobrenome())
                 .email(usuario.getEmail())
                 .perfis(perfilMapper.toPerfisModels(usuario.getPerfis()))
+                .saldoTotal(usuario.getSaldoTotal() != null ? usuario.getSaldoTotal().getValor() : null)
                 .dataCadastrado(toFusoPadraoSistema(usuario.getDataCadastro()))
                 .dataAtualizacao(toFusoPadraoSistema(usuario.getDataAtualizacao()))
                 .build();
@@ -57,6 +59,7 @@ public class UsuarioMapper {
                 .nome(usuario.getNome())
                 .sobrenome(usuario.getSobrenome())
                 .email(usuario.getEmail())
+                //.saldoTotal(usuario.getSaldoTotal() != null ? usuario.getSaldoTotal().getValor() : null)
                 .dataCadastrado(usuario.getDataCadastro())
                 .dataAtualizacao(usuario.getDataAtualizacao())
                 .build();
