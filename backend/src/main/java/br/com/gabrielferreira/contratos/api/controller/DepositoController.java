@@ -46,4 +46,12 @@ public class DepositoController {
 
         return ResponseEntity.ok().body(saldoModels);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<SaldoModel> buscarDepositoPorUsuarioId(@PathVariable Long idUsuario, @PathVariable Long id){
+        Saldo saldo = depositoService.buscarDepositoPorId(idUsuario, id);
+        SaldoModel saldoModel = saldoMapper.toSaldoModel(saldo);
+
+        return ResponseEntity.ok().body(saldoModel);
+    }
 }

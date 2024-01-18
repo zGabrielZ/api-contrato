@@ -44,4 +44,9 @@ public class DepositoService {
         }
         return saldoRepository.findAll(new SaldoSpecification(idUsuario, filtro, TipoMovimentacaoEnum.DEPOSITO), pageable);
     }
+
+    public Saldo buscarDepositoPorId(Long idUsuario, Long id){
+        return saldoRepository.buscarSaldoPorId(idUsuario, id, TipoMovimentacaoEnum.DEPOSITO)
+                .orElseThrow(() -> new NaoEncontradoException("Déposito não encontrado"));
+    }
 }
