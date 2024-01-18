@@ -46,4 +46,12 @@ public class SaqueController {
 
         return ResponseEntity.ok().body(saldoModels);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<SaldoModel> buscarSaquePorUsuarioId(@PathVariable Long idUsuario, @PathVariable Long id){
+        Saldo saldo = saqueService.buscarSaquePorId(idUsuario, id);
+        SaldoModel saldoModel = saldoMapper.toSaldoModel(saldo);
+
+        return ResponseEntity.ok().body(saldoModel);
+    }
 }

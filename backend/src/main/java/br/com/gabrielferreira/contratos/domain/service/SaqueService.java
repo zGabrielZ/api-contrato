@@ -51,4 +51,9 @@ public class SaqueService {
         }
         return saldoRepository.findAll(new SaldoSpecification(idUsuario, filtro, TipoMovimentacaoEnum.SAQUE), pageable);
     }
+
+    public Saldo buscarSaquePorId(Long idUsuario, Long id){
+        return saldoRepository.buscarSaldoPorId(idUsuario, id, TipoMovimentacaoEnum.SAQUE)
+                .orElseThrow(() -> new NaoEncontradoException("Saque não encontrado"));
+    }
 }
