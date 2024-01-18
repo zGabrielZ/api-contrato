@@ -1,11 +1,16 @@
 package br.com.gabrielferreira.contratos.domain.service;
 
+import br.com.gabrielferreira.contratos.domain.exception.NaoEncontradoException;
 import br.com.gabrielferreira.contratos.domain.model.Saldo;
 import br.com.gabrielferreira.contratos.domain.model.Usuario;
 import br.com.gabrielferreira.contratos.domain.model.enums.TipoMovimentacaoEnum;
 import br.com.gabrielferreira.contratos.domain.repository.SaldoRepository;
+import br.com.gabrielferreira.contratos.domain.repository.filter.SaldoFilterModel;
 import br.com.gabrielferreira.contratos.domain.service.validator.SaqueValidator;
+import br.com.gabrielferreira.contratos.domain.specification.SaldoSpecification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,5 +43,12 @@ public class SaqueService {
         saldoTotalUsuarioService.adicionarSaldoTotalUsuario(usuario, saldo);
         historicoSaldoService.adicionarHistorico(saldo, usuario);
         return saldo;
+    }
+
+    public Page<Saldo> buscarSaquesPaginados(Long idUsuario, SaldoFilterModel filtro, Pageable pageable){
+        if(!usuarioService.isUsuarioExistente(idUsuario)){
+            throw new NaoEncontradoException("Usuário não encontrado");
+        }
+        return saldoRepository.findAll(new SaldoSpecification(idUsuario, filtro, TipoMovimentacaoEnum.SAQUE), pageable);
     }
 }
