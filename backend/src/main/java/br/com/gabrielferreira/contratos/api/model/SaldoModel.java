@@ -28,6 +28,4 @@ public class SaldoModel implements Serializable {
     private ZonedDateTime dataCadastro;
 
     private ZonedDateTime dataAtualizacao;
-
-    private UsuarioResumidoModel usuario;
 }

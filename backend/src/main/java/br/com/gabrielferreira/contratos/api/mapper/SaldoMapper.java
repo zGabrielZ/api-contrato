@@ -2,17 +2,16 @@ package br.com.gabrielferreira.contratos.api.mapper;
 
 import br.com.gabrielferreira.contratos.api.model.SaldoModel;
 import br.com.gabrielferreira.contratos.api.model.input.SaldoInputModel;
+import br.com.gabrielferreira.contratos.api.model.params.SaldoParamsModel;
 import br.com.gabrielferreira.contratos.domain.model.Saldo;
-import lombok.RequiredArgsConstructor;
+import br.com.gabrielferreira.contratos.domain.repository.filter.SaldoFilterModel;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import static br.com.gabrielferreira.contratos.common.utils.DataUtils.toFusoPadraoSistema;
 
 @Component
-@RequiredArgsConstructor
 public class SaldoMapper {
-
-    private final UsuarioMapper usuarioMapper;
 
     public Saldo toSaldo(SaldoInputModel saldoInputModel){
         return Saldo.builder()
@@ -27,7 +26,20 @@ public class SaldoMapper {
                 .tipoMovimentacao(saldo.getTipoMovimentacao().name())
                 .dataCadastro(toFusoPadraoSistema(saldo.getDataCadastro()))
                 .dataAtualizacao(toFusoPadraoSistema(saldo.getDataAtualizacao()))
-                .usuario(usuarioMapper.toUsuarioResumidoModel(saldo.getUsuario()))
                 .build();
+    }
+
+    public SaldoFilterModel toSaldoFilterModel(SaldoParamsModel saldoParamsModel){
+        return SaldoFilterModel.builder()
+                .id(saldoParamsModel.getId())
+                .valorInicial(saldoParamsModel.getValorInicial())
+                .valorFinal(saldoParamsModel.getValorFinal())
+                .dataCadastro(saldoParamsModel.getDataCadastro())
+                .dataAtualizacao(saldoParamsModel.getDataAtualizacao())
+                .build();
+    }
+
+    public Page<SaldoModel> toSaldosModels(Page<Saldo> saldos){
+        return saldos.map(this::toSaldoModel);
     }
 }
