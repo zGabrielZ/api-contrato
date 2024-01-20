@@ -41,10 +41,13 @@ public class Contrato implements Serializable {
     @Column(name = "VALOR_TOTAL", nullable = false)
     private BigDecimal valorTotal;
 
+    @Transient
+    private Integer numeroParcelas;
+
     @Enumerated(EnumType.STRING)
     private SituacaoContratoEnum situacaoContrato;
 
-    @OneToMany(mappedBy = "contrato", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "contrato", fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<Parcela> parcelas = new ArrayList<>();
 
     @JoinColumn(name = "ID_USUARIO", nullable = false)

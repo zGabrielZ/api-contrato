@@ -15,3 +15,7 @@ logging:
   level:
     org:
       flywaydb: DEBUG
+
+pagamento:
+  online:
+    servico: PayPalService
