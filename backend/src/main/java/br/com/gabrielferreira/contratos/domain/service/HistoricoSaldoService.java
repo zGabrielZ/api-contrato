@@ -38,4 +38,9 @@ public class HistoricoSaldoService {
         }
         return historicoSaldoRepository.findAll(new HistoricoSaldoSpecification(idUsuario, filtro), pageable);
     }
+
+    public HistoricoSaldo buscarHistoricoSaldoPorId(Long idUsuario, Long id){
+        return historicoSaldoRepository.buscarHistorico(idUsuario, id)
+                .orElseThrow(() -> new NaoEncontradoException("Histórico saldo não encontrado"));
+    }
 }

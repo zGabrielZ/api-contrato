@@ -34,4 +34,12 @@ public class HistoricoSaldoController {
 
         return ResponseEntity.ok().body(historicoSaldoModels);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<HistoricoSaldoModel> buscarHistoricoPorUsuarioId(@PathVariable Long idUsuario, @PathVariable Long id){
+        HistoricoSaldo historicoSaldo = historicoSaldoService.buscarHistoricoSaldoPorId(idUsuario, id);
+        HistoricoSaldoModel historicoSaldoModel = historicoSaldoMapper.toHistoricoSaldoModel(historicoSaldo);
+
+        return ResponseEntity.ok().body(historicoSaldoModel);
+    }
 }
