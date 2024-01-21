@@ -14,3 +14,7 @@ spring:
         format_sql: true
   flyway:
     enabled: false
+
+pagamento:
+  online:
+    servico: PayPalService

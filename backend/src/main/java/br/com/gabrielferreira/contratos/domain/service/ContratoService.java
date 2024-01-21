@@ -79,7 +79,7 @@ public class ContratoService {
     }
 
     private void verificarServico(){
-        if(pagamentoOnlineServico.equals(PayPalService.class.getSimpleName())){
+        if(pagamentoOnlineServico != null && pagamentoOnlineServico.equals(PayPalService.class.getSimpleName())){
             pagamentoOnline = new PayPalService();
         } else {
             throw new RegraDeNegocioException("É necessário informar o tipo de serviço para o pagamento");
