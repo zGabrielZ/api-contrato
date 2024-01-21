@@ -34,7 +34,7 @@ public class PerfilSpecification implements Specification<Perfil> {
         }
 
         if(filtro.isAutoriedadeExistente()){
-            Predicate predicateAutoriedade = criteriaBuilder.like(root.get("descricao"), "%".concat(filtro.getAutoriedade()).concat("%"));
+            Predicate predicateAutoriedade = criteriaBuilder.equal(root.get("autoriedade"), filtro.getAutoriedade());
             predicates.add(predicateAutoriedade);
         }
 
