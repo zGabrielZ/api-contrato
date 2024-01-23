@@ -65,4 +65,13 @@ public class UsuarioFactory {
                 .perfis(criarPerfisInput())
                 .build();
     }
+
+    public static UsuarioInputModel criarUsuarioInputUpdate(){
+        return UsuarioInputModel.builder()
+                .nome("Teste usuário nome editado")
+                .sobrenome("Teste usuário sobrenome editado")
+                .email("testeeditado@email.com")
+                .perfis(List.of(criarPerfilInput()))
+                .build();
+    }
 }

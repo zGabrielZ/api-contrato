@@ -53,4 +53,10 @@ public class PerfilFactory {
 
         return Arrays.asList(input1, input2);
     }
+
+    public static PerfilInputModel criarPerfilInput(){
+        return PerfilInputModel.builder()
+                .id(1L)
+                .build();
+    }
 }
