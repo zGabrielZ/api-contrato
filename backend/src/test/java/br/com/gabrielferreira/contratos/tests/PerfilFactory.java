@@ -5,6 +5,7 @@ import br.com.gabrielferreira.contratos.domain.repository.filter.PerfilFilterMod
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class PerfilFactory {
@@ -25,7 +26,7 @@ public class PerfilFactory {
         Perfil perfil2 = criarPerfil();
         perfil2.setId(2L);
 
-        return List.of(perfil1, perfil2);
+        return Arrays.asList(perfil1, perfil2);
     }
 
     public static PerfilFilterModel criarFiltroPerfil(Long id, String descricao, String autoriedade){

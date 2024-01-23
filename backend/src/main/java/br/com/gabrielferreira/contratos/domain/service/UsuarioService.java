@@ -40,8 +40,7 @@ public class UsuarioService {
 
     @Transactional
     public Usuario atualizarUsuario(Long id, Usuario usuario){
-        Usuario usuarioEncontrado = usuarioRepository.buscarPorId(id)
-                        .orElseThrow(() -> new NaoEncontradoException("Usuário não encontrado"));
+        Usuario usuarioEncontrado = buscarUsuarioPorId(id);
 
         usuarioValidator.validarCampos(usuario);
         usuarioValidator.validarEmail(usuario.getEmail(), usuarioEncontrado.getId());
