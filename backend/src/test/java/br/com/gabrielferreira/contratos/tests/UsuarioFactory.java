@@ -1,5 +1,6 @@
 package br.com.gabrielferreira.contratos.tests;
 
+import br.com.gabrielferreira.contratos.api.model.input.UsuarioInputModel;
 import br.com.gabrielferreira.contratos.domain.model.Usuario;
 import br.com.gabrielferreira.contratos.domain.repository.filter.UsuarioFilterModel;
 import org.springframework.data.domain.Page;
@@ -54,5 +55,14 @@ public class UsuarioFactory {
 
     public static Page<Usuario> criarUsuariosPaginados(){
         return new PageImpl<>(List.of(usuarioCriado()));
+    }
+
+    public static UsuarioInputModel criarUsuarioInput(){
+        return UsuarioInputModel.builder()
+                .nome("Teste usuário nome")
+                .sobrenome("Teste usuário sobrenome")
+                .email("teste@email.com")
+                .perfis(criarPerfisInput())
+                .build();
     }
 }

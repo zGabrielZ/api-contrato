@@ -1,5 +1,6 @@
 package br.com.gabrielferreira.contratos.tests;
 
+import br.com.gabrielferreira.contratos.api.model.input.PerfilInputModel;
 import br.com.gabrielferreira.contratos.domain.model.Perfil;
 import br.com.gabrielferreira.contratos.domain.repository.filter.PerfilFilterModel;
 import org.springframework.data.domain.Page;
@@ -39,5 +40,17 @@ public class PerfilFactory {
 
     public static Page<Perfil> criarPerfisPaginacao(){
         return new PageImpl<>(List.of(criarPerfil()));
+    }
+
+    public static List<PerfilInputModel> criarPerfisInput(){
+        PerfilInputModel input1 = PerfilInputModel.builder()
+                .id(1L)
+                .build();
+
+        PerfilInputModel input2 = PerfilInputModel.builder()
+                .id(2L)
+                .build();
+
+        return Arrays.asList(input1, input2);
     }
 }
