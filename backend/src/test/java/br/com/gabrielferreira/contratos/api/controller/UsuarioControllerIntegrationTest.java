@@ -231,4 +231,27 @@ class UsuarioControllerIntegrationTest {
         resultActions.andExpect(status().isBadRequest());
         resultActions.andExpect(jsonPath("$.mensagem").value("Este e-mail 'marcos@email.com' já foi cadastrado"));
     }
+
+    @Test
+    @DisplayName("Deve deletar usuário quando existir dados")
+    @Order(10)
+    void deveDeletarUsuarioQuandoExistirDados() throws Exception {
+        ResultActions resultActions = mockMvc
+                .perform(delete(URL.concat("/{id}"), idUsuarioExistente)
+                        .accept(MEDIA_TYPE_JSON));
+
+        resultActions.andExpect(status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("Não deve deletar usuário quando não existir dados")
+    @Order(11)
+    void naoDeveDeletarEvento() throws Exception {
+        ResultActions resultActions = mockMvc
+                .perform(delete(URL.concat("/{id}"), idUsuarioInexistente)
+                        .accept(MEDIA_TYPE_JSON));
+
+        resultActions.andExpect(status().isNotFound());
+        resultActions.andExpect(jsonPath("$.mensagem").value("Usuário não encontrado"));
+    }
 }
