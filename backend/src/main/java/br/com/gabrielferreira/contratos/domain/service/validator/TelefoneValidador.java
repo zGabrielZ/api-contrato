@@ -23,9 +23,9 @@ public class TelefoneValidador {
 
     public void validarTipoTelefone(Telefone telefone){
         if(telefone.isResidencial() && telefone.getNumero().length() == 9){
-            throw new RegraDeNegocioException(String.format("Este número informado %s não é um celular", telefone.getNumeroFormatado()));
+            throw new RegraDeNegocioException(String.format("Este número informado %s está com o tipo de telefone residencial", telefone.getNumeroFormatado()));
         } else if(telefone.isCelular() && telefone.getNumero().length() == 8){
-            throw new RegraDeNegocioException(String.format("Este número informado %s não é um telefone residencial", telefone.getNumeroFormatado()));
+            throw new RegraDeNegocioException(String.format("Este número informado %s está com o tipo de telefone celular", telefone.getNumeroFormatado()));
         }
     }
 

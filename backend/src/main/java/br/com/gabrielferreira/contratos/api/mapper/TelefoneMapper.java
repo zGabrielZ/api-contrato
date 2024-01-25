@@ -31,6 +31,7 @@ public class TelefoneMapper {
                 .numero(telefone.getNumero())
                 .descricao(telefone.getDescricao())
                 .tipoTelefone(telefone.getTipoTelefone().name())
+                .tipoTelefoneDescricao(telefone.getTipoTelefone().getDescricao())
                 .dataCadastro(toFusoPadraoSistema(telefone.getDataCadastro()))
                 .dataAtualizacao(toFusoPadraoSistema(telefone.getDataAtualizacao()))
                 .build();

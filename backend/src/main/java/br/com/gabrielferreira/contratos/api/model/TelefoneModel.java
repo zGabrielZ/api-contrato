@@ -28,6 +28,8 @@ public class TelefoneModel implements Serializable {
 
     private String tipoTelefone;
 
+    private String tipoTelefoneDescricao;
+
     private ZonedDateTime dataCadastro;
 
     private ZonedDateTime dataAtualizacao;
