@@ -1,6 +1,8 @@
 package br.com.gabrielferreira.contratos.api.model.params;
 
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -30,6 +33,14 @@ public class UsuarioParamsModel implements Serializable {
 
     @Email
     private String email;
+
+    @Positive
+    @Digits(integer = 10, fraction = 2)
+    private BigDecimal saldoTotalInicial;
+
+    @Positive
+    @Digits(integer = 10, fraction = 2)
+    private BigDecimal saldoTotalFinal;
 
     private LocalDate dataCadastro;
 

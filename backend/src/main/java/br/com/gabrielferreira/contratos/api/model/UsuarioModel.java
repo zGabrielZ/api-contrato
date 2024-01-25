@@ -33,7 +33,7 @@ public class UsuarioModel implements Serializable {
 
     private BigDecimal saldoTotal;
 
-    private ZonedDateTime dataCadastrado;
+    private ZonedDateTime dataCadastro;
 
     private ZonedDateTime dataAtualizacao;
 }

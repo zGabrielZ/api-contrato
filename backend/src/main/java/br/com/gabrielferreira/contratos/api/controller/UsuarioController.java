@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -63,7 +64,7 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<UsuarioResumidoModel>> buscarUsuarios(@PageableDefault(size = 5) Pageable pageable, @Valid UsuarioParamsModel params){
+    public ResponseEntity<Page<UsuarioResumidoModel>> buscarUsuarios(@PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, @Valid UsuarioParamsModel params){
         UsuarioFilterModel usuarioFilterModel = usuarioMapper.toUsuarioFilterModel(params);
         Page<Usuario> usuarios = usuarioService.buscarUsuarios(pageable, usuarioFilterModel);
         Page<UsuarioResumidoModel> usuarioResumidoModels = usuarioMapper.toUsuariosResumidosModels(usuarios);

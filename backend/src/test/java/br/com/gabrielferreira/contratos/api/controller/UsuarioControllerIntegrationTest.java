@@ -73,7 +73,7 @@ class UsuarioControllerIntegrationTest {
         resultActions.andExpect(jsonPath("$.sobrenome").value(sobrenomeEsperado));
         resultActions.andExpect(jsonPath("$.email").value(emailEsperado));
         resultActions.andExpect(jsonPath("$.perfis").exists());
-        resultActions.andExpect(jsonPath("$.dataCadastrado").exists());
+        resultActions.andExpect(jsonPath("$.dataCadastro").exists());
     }
 
     @Test
@@ -174,7 +174,7 @@ class UsuarioControllerIntegrationTest {
         resultActions.andExpect(jsonPath("$.sobrenome").exists());
         resultActions.andExpect(jsonPath("$.email").exists());
         resultActions.andExpect(jsonPath("$.perfis").exists());
-        resultActions.andExpect(jsonPath("$.dataCadastrado").exists());
+        resultActions.andExpect(jsonPath("$.dataCadastro").exists());
     }
 
     @Test
@@ -212,7 +212,7 @@ class UsuarioControllerIntegrationTest {
         resultActions.andExpect(jsonPath("$.sobrenome").value(sobrenomeEsperado));
         resultActions.andExpect(jsonPath("$.email").value(emailEsperado));
         resultActions.andExpect(jsonPath("$.perfis").exists());
-        resultActions.andExpect(jsonPath("$.dataCadastrado").exists());
+        resultActions.andExpect(jsonPath("$.dataCadastro").exists());
     }
 
     @Test
@@ -253,5 +253,20 @@ class UsuarioControllerIntegrationTest {
 
         resultActions.andExpect(status().isNotFound());
         resultActions.andExpect(jsonPath("$.mensagem").value("Usuário não encontrado"));
+    }
+
+    @Test
+    @DisplayName("Deve buscar usuário")
+    @Order(12)
+    void deveBuscarUsuarios() throws Exception {
+        String filtro = "?page=0&size=5&sort=id,desc&sort=nome,desc&sort=email,desc";
+
+        ResultActions resultActions = mockMvc
+                .perform(get(URL.concat(filtro))
+                        .accept(MEDIA_TYPE_JSON));
+        resultActions.andExpect(status().isOk());
+
+        resultActions.andExpect(status().isOk());
+        resultActions.andExpect(jsonPath("$.content").exists());
     }
 }

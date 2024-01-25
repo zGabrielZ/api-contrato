@@ -29,7 +29,7 @@ public class UsuarioResumidoModel implements Serializable {
 
     private BigDecimal saldoTotal;
 
-    private ZonedDateTime dataCadastrado;
+    private ZonedDateTime dataCadastro;
 
     private ZonedDateTime dataAtualizacao;
 }

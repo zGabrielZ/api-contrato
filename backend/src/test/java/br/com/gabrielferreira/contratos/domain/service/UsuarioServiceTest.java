@@ -1,6 +1,7 @@
 package br.com.gabrielferreira.contratos.domain.service;
 
 import br.com.gabrielferreira.contratos.domain.exception.NaoEncontradoException;
+import br.com.gabrielferreira.contratos.domain.exception.RegraDeNegocioException;
 import br.com.gabrielferreira.contratos.domain.model.Usuario;
 import br.com.gabrielferreira.contratos.domain.repository.UsuarioRepository;
 import br.com.gabrielferreira.contratos.domain.repository.filter.UsuarioFilterModel;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import static br.com.gabrielferreira.contratos.tests.UsuarioFactory.*;
@@ -129,5 +131,39 @@ class UsuarioServiceTest {
 
         Page<Usuario> usuarios = usuarioService.buscarUsuarios(pageRequest, filtro);
         assertFalse(usuarios.isEmpty());
+    }
+
+    @Test
+    @DisplayName("Não deve buscar usuários paginados quando informar saldo total inicial maior que saldo total final")
+    @Order(7)
+    void naoDeveBuscarUsuarioPaginadosQuandoInformarSaldoTotalInicialMaiorSaldoTotalFinal(){
+        PageRequest pageRequest = PageRequest.of(0, 5);
+        UsuarioFilterModel filtro = criarFiltroUsuario();
+        filtro.setSaldoTotalInicial(BigDecimal.valueOf(100.00));
+        filtro.setSaldoTotalFinal(BigDecimal.valueOf(50.00));
+
+        assertThrows(RegraDeNegocioException.class, () -> usuarioService.buscarUsuarios(pageRequest, filtro));
+    }
+
+    @Test
+    @DisplayName("Não deve buscar usuários paginados quando informar saldo total inicial e não informar saldo total final")
+    @Order(8)
+    void naoDeveBuscarUsuarioQuandoInformarSaldoTotalInicialENaoInformarSaldoTotalFinal(){
+        PageRequest pageRequest = PageRequest.of(0, 5);
+        UsuarioFilterModel filtro = criarFiltroUsuario();
+        filtro.setSaldoTotalInicial(BigDecimal.valueOf(100.00));
+
+        assertThrows(RegraDeNegocioException.class, () -> usuarioService.buscarUsuarios(pageRequest, filtro));
+    }
+
+    @Test
+    @DisplayName("Não deve buscar usuários paginados quando informar saldo total inicial e não informar saldo total final")
+    @Order(9)
+    void naoDeveBuscarUsuariosPaginadosQuandoNaoInformarSaldoTotalInicialENaoInformarSaldoTotalFinal(){
+        PageRequest pageRequest = PageRequest.of(0, 5);
+        UsuarioFilterModel filtro = criarFiltroUsuario();
+        filtro.setSaldoTotalFinal(BigDecimal.valueOf(100.00));
+
+        assertThrows(RegraDeNegocioException.class, () -> usuarioService.buscarUsuarios(pageRequest, filtro));
     }
 }

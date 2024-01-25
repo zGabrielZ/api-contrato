@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -31,6 +32,10 @@ public class UsuarioFilterModel implements Serializable {
 
     private LocalDate dataAtualizacao;
 
+    private BigDecimal saldoTotalInicial;
+
+    private BigDecimal saldoTotalFinal;
+
     public boolean isIdExistente(){
         return this.id != null;
     }
@@ -53,5 +58,13 @@ public class UsuarioFilterModel implements Serializable {
 
     public boolean isDataAtualizacaoExistente(){
         return this.dataAtualizacao != null;
+    }
+
+    public boolean isSaldoTotalInicialExistente(){
+        return this.saldoTotalInicial != null;
+    }
+
+    public boolean isSaldoTotalFinalExistente(){
+        return this.saldoTotalFinal != null;
     }
 }

@@ -35,7 +35,7 @@ public class UsuarioMapper {
                 .email(usuario.getEmail())
                 .perfis(perfilMapper.toPerfisModels(usuario.getPerfis()))
                 .saldoTotal(usuario.getSaldoTotal() != null ? usuario.getSaldoTotal().getValor() : null)
-                .dataCadastrado(toFusoPadraoSistema(usuario.getDataCadastro()))
+                .dataCadastro(toFusoPadraoSistema(usuario.getDataCadastro()))
                 .dataAtualizacao(toFusoPadraoSistema(usuario.getDataAtualizacao()))
                 .build();
     }
@@ -48,7 +48,7 @@ public class UsuarioMapper {
                 .email(usuario.getEmail())
                 .perfis(perfilMapper.toPerfisModels(usuario.getPerfis()))
                 .saldoTotal(usuario.getSaldoTotal() != null ? usuario.getSaldoTotal().getValor() : null)
-                .dataCadastrado(toFusoPadraoSistema(usuario.getDataCadastro()))
+                .dataCadastro(toFusoPadraoSistema(usuario.getDataCadastro()))
                 .dataAtualizacao(toFusoPadraoSistema(usuario.getDataAtualizacao()))
                 .build();
     }
@@ -60,8 +60,8 @@ public class UsuarioMapper {
                 .sobrenome(usuario.getSobrenome())
                 .email(usuario.getEmail())
                 .saldoTotal(usuario.getSaldoTotal() != null ? usuario.getSaldoTotal().getValor() : null)
-                .dataCadastrado(usuario.getDataCadastro())
-                .dataAtualizacao(usuario.getDataAtualizacao())
+                .dataCadastro(toFusoPadraoSistema(usuario.getDataCadastro()))
+                .dataAtualizacao(toFusoPadraoSistema(usuario.getDataAtualizacao()))
                 .build();
     }
 
@@ -75,6 +75,8 @@ public class UsuarioMapper {
                 .nome(usuarioParamsModel.getNome())
                 .sobrenome(usuarioParamsModel.getSobrenome())
                 .email(usuarioParamsModel.getEmail())
+                .saldoTotalInicial(usuarioParamsModel.getSaldoTotalInicial())
+                .saldoTotalFinal(usuarioParamsModel.getSaldoTotalFinal())
                 .dataCadastro(usuarioParamsModel.getDataCadastro())
                 .dataAtualizacao(usuarioParamsModel.getDataAtualizacao())
                 .build();

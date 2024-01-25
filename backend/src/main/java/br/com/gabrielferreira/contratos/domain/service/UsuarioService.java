@@ -1,6 +1,7 @@
 package br.com.gabrielferreira.contratos.domain.service;
 
 import br.com.gabrielferreira.contratos.domain.exception.NaoEncontradoException;
+import br.com.gabrielferreira.contratos.domain.exception.RegraDeNegocioException;
 import br.com.gabrielferreira.contratos.domain.model.Perfil;
 import br.com.gabrielferreira.contratos.domain.model.Usuario;
 import br.com.gabrielferreira.contratos.domain.repository.UsuarioRepository;
@@ -12,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 @Service
@@ -63,6 +63,19 @@ public class UsuarioService {
     }
 
     public Page<Usuario> buscarUsuarios(Pageable pageable, UsuarioFilterModel filtro){
+        if(filtro.isSaldoTotalInicialExistente() && !filtro.isSaldoTotalFinalExistente()){
+            throw new RegraDeNegocioException("É necessário informar o saldo total final");
+        }
+
+        if(!filtro.isSaldoTotalInicialExistente() && filtro.isSaldoTotalFinalExistente()){
+            throw new RegraDeNegocioException("É necessário informar o saldo total inicial");
+        }
+
+        if(filtro.isSaldoTotalInicialExistente() && filtro.isSaldoTotalFinalExistente()
+            && filtro.getSaldoTotalInicial().compareTo(filtro.getSaldoTotalFinal()) > 0){
+            throw new RegraDeNegocioException("Saldo total inicial é maior que o saldo total final");
+        }
+
         return usuarioRepository.findAll(new UsuarioSpecification(filtro), pageable);
     }
 
