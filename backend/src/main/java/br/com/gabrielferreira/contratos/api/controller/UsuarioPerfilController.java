@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,7 @@ public class UsuarioPerfilController {
     private final PerfilMapper perfilMapper;
 
     @GetMapping
-    public ResponseEntity<Page<PerfilModel>> buscarPerfisPorUsuario(@PathVariable Long idUsuario, @PageableDefault(size = 5) Pageable pageable, @Valid PerfilParamsModel params){
+    public ResponseEntity<Page<PerfilModel>> buscarPerfisPorUsuario(@PathVariable Long idUsuario, @PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, @Valid PerfilParamsModel params){
         PerfilFilterModel perfilFilterModel = perfilMapper.toPerfilFilterModel(params);
         Page<Perfil> perfis = usuarioPerfilService.buscarPerfisPorUsuario(idUsuario, pageable, perfilFilterModel);
         Page<PerfilModel> perfilModels = perfilMapper.toPerfisModels(perfis);
