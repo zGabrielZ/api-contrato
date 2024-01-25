@@ -3,6 +3,7 @@ package br.com.gabrielferreira.contratos.domain.service;
 import br.com.gabrielferreira.contratos.domain.exception.NaoEncontradoException;
 import br.com.gabrielferreira.contratos.domain.exception.RegraDeNegocioException;
 import br.com.gabrielferreira.contratos.domain.model.Perfil;
+import br.com.gabrielferreira.contratos.domain.model.SaldoTotalUsuario;
 import br.com.gabrielferreira.contratos.domain.model.Usuario;
 import br.com.gabrielferreira.contratos.domain.repository.UsuarioRepository;
 import br.com.gabrielferreira.contratos.domain.repository.filter.UsuarioFilterModel;
@@ -13,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -28,6 +31,11 @@ public class UsuarioService {
         usuarioValidator.validarCampos(usuario);
         usuarioValidator.validarEmail(usuario.getEmail(), usuario.getId());
         usuarioValidator.validarPerfil(usuario);
+
+        SaldoTotalUsuario saldoTotalUsuario = SaldoTotalUsuario.builder()
+                .valor(BigDecimal.ZERO)
+                .build();
+        usuario.setSaldoTotal(saldoTotalUsuario);
 
         usuario = usuarioRepository.save(usuario);
         return usuario;

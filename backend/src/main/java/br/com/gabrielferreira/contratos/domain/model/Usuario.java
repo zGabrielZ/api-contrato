@@ -38,7 +38,7 @@ public class Usuario implements Serializable {
     @Column(name = "EMAIL", nullable = false, unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Telefone> telefones = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -47,8 +47,8 @@ public class Usuario implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "ID_PERFIL", referencedColumnName = "ID", table = "TB_PERFIL"))
     private List<Perfil> perfis = new ArrayList<>();
 
-    @JoinColumn(name = "ID_SALDO_TOTAL")
-    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_SALDO_TOTAL", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private SaldoTotalUsuario saldoTotal;
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
