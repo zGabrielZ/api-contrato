@@ -11,7 +11,9 @@ import br.com.gabrielferreira.contratos.domain.service.validator.UsuarioValidato
 import br.com.gabrielferreira.contratos.domain.specification.UsuarioSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -84,6 +86,8 @@ public class UsuarioService {
             throw new RegraDeNegocioException("Saldo total inicial é maior que o saldo total final");
         }
 
+        pageable = verificarSaldoTotalOrderInformado(pageable);
+
         return usuarioRepository.findAll(new UsuarioSpecification(filtro), pageable);
     }
 
@@ -106,5 +110,18 @@ public class UsuarioService {
                 perfisExistentes.add(novoPerfil);
             }
         });
+    }
+
+    private Pageable verificarSaldoTotalOrderInformado(Pageable pageable){
+        List<Sort.Order> sort = pageable.getSort().stream()
+                        .map(order -> {
+                            if(order.getProperty().equals("saldoTotal")){
+                                return new Sort.Order(order.getDirection(), "saldoTotal.valor");
+                            } else {
+                                return order;
+                            }
+                        }).toList();
+        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(sort));
+        return pageable;
     }
 }
