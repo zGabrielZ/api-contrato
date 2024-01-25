@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -268,5 +269,35 @@ class UsuarioControllerIntegrationTest {
 
         resultActions.andExpect(status().isOk());
         resultActions.andExpect(jsonPath("$.content").exists());
+    }
+
+    @Test
+    @DisplayName("Deve buscar usuário quando informar parametros")
+    @Order(13)
+    void deveBuscarUsuariosQuandoInformarParametros() throws Exception {
+        String filtro = "?page=0&size=5&id=1&nome=Marcos&sobrenome=Silva&email=marcos@email.com&dataCadastro=" + LocalDate.now();
+
+        ResultActions resultActions = mockMvc
+                .perform(get(URL.concat(filtro))
+                        .accept(MEDIA_TYPE_JSON));
+        resultActions.andExpect(status().isOk());
+
+        resultActions.andExpect(status().isOk());
+        resultActions.andExpect(jsonPath("$.content").exists());
+    }
+
+    @Test
+    @DisplayName("Não deve buscar usuário quando informar periodo de saldo")
+    @Order(14)
+    void naoDeveBuscarUsuarioQuandoInformarPeriodoSaldo() throws Exception {
+        String filtro = "?page=0&size=5&saldoTotalInicial=100.00&saldoTotalFinal=200.00";
+
+        ResultActions resultActions = mockMvc
+                .perform(get(URL.concat(filtro))
+                        .accept(MEDIA_TYPE_JSON));
+        resultActions.andExpect(status().isOk());
+
+        resultActions.andExpect(status().isOk());
+        resultActions.andExpect(jsonPath("$.content").isEmpty());
     }
 }
